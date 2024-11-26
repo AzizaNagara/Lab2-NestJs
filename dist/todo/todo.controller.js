@@ -18,13 +18,13 @@ const todo_service_1 = require("./todo.service");
 const create_todo_dto_1 = require("./dto/create-todo.dto");
 const update_todo_dto_1 = require("./dto/update-todo.dto");
 const status_enum_1 = require("./entities/status.enum");
-const common_2 = require("@nestjs/common");
 let TodoController = class TodoController {
     constructor(todoService) {
         this.todoService = todoService;
     }
-    create(createTodoDto) {
-        return this.todoService.addTodo(createTodoDto);
+    async create(createTodoDto, req) {
+        const userId = req.userId;
+        return this.todoService.addTodo({ ...createTodoDto, userId });
     }
     async getTodoById(id) {
         try {
@@ -34,10 +34,18 @@ let TodoController = class TodoController {
             throw error;
         }
     }
-    update(id, updateTodoDto) {
+    async update(id, updateTodoDto, req) {
+        const todo = await this.todoService.findOneById(+id);
+        if (todo.userId !== req.userId) {
+            throw new common_1.UnauthorizedException('Vous n’avez pas la permission de modifier ce Todo.');
+        }
         return this.todoService.update(+id, updateTodoDto);
     }
-    async deleteTodo(id) {
+    async deleteTodo(id, req) {
+        const todo = await this.todoService.findOneById(id);
+        if (todo.userId !== req.userId) {
+            throw new common_1.UnauthorizedException('Vous n’avez pas la permission de supprimer ce Todo.');
+        }
         await this.todoService.softDelete(id);
     }
     async restoreTodo(id) {
@@ -45,7 +53,6 @@ let TodoController = class TodoController {
     }
     async getTodosCountByStatus() {
         const statusCount = await this.todoService.countTodosByStatus();
-        console.log('Status Count:', statusCount);
         return statusCount;
     }
     async getAllTodos() {
@@ -59,9 +66,10 @@ exports.TodoController = TodoController;
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_todo_dto_1.CreateTodoDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_todo_dto_1.CreateTodoDto, Object]),
+    __metadata("design:returntype", Promise)
 ], TodoController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(':id'),
@@ -74,15 +82,17 @@ __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_todo_dto_1.UpdateTodoDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, update_todo_dto_1.UpdateTodoDto, Object]),
+    __metadata("design:returntype", Promise)
 ], TodoController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], TodoController.prototype, "deleteTodo", null);
 __decorate([
@@ -106,11 +116,11 @@ __decorate([
 ], TodoController.prototype, "getAllTodos", null);
 __decorate([
     (0, common_1.Get)('NDS'),
-    __param(0, (0, common_2.Query)('name')),
-    __param(1, (0, common_2.Query)('description')),
-    __param(2, (0, common_2.Query)('status')),
-    __param(3, (0, common_2.Query)('page')),
-    __param(4, (0, common_2.Query)('limit')),
+    __param(0, (0, common_1.Query)('name')),
+    __param(1, (0, common_1.Query)('description')),
+    __param(2, (0, common_1.Query)('status')),
+    __param(3, (0, common_1.Query)('page')),
+    __param(4, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String, String, Number, Number]),
     __metadata("design:returntype", Promise)

@@ -5,6 +5,7 @@ import { CommonModuleModule } from './common-module/common-module.module';
 import { TodoModule } from './todo/todo.module'; // Import TodoModule (which already contains TodoController and TodoService)
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from './todo/entities/todo.entity';
+import { User } from './user/entities/user.entity';
 
 @Module({
   imports: [
@@ -13,9 +14,9 @@ import { TodoEntity } from './todo/entities/todo.entity';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: '0000',
+      password: 'charfouna',
       database: 'todos',
-      entities: [TodoEntity],
+      entities: [TodoEntity,User],
       synchronize: true,
       logging: true,
     }),

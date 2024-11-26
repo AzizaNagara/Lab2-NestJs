@@ -1,9 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,UnauthorizedException ,Request, Query} from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { StatusEnum } from './entities/status.enum';
-import { Query } from '@nestjs/common';
 import { TodoEntity } from './entities/todo.entity';
 
 @Controller('todo')
@@ -11,8 +10,10 @@ export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   @Post()
-  create(@Body() createTodoDto: CreateTodoDto) {
-    return this.todoService.addTodo(createTodoDto);
+  async create(@Body() createTodoDto: CreateTodoDto, @Request() req) {
+    // Associer l'utilisateur à la création du Todo
+    const  userId= req.userId; // Injecté par le middleware
+    return this.todoService.addTodo({ ...createTodoDto, userId });
   }
 
   @Get(':id') // Paramètre :id dans l'URL
@@ -25,7 +26,13 @@ export class TodoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
+  async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto , @Request() req) {
+    const todo = await this.todoService.findOneById(+id);
+    // Vérifier si l'utilisateur est bien celui qui a créé le Todo
+    if (todo.userId !== req.userId) {
+      throw new UnauthorizedException('Vous n’avez pas la permission de modifier ce Todo.');
+    }
+
     return this.todoService.update(+id, updateTodoDto);
   }
 
@@ -38,7 +45,13 @@ export class TodoController {
 
   // endpoint softDelete
   @Delete(':id')
-  async deleteTodo(@Param('id') id: number): Promise<void> {
+  async deleteTodo(@Param('id') id: number, @Request() req): Promise<void> {
+    const todo = await this.todoService.findOneById(id);
+
+    // Vérifier si l'utilisateur est bien celui qui a créé le Todo
+    if (todo.userId !== req.userId) {
+      throw new UnauthorizedException('Vous n’avez pas la permission de supprimer ce Todo.');
+    }
     await this.todoService.softDelete(id);
   }
   

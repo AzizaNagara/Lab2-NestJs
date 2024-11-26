@@ -27,4 +27,8 @@ __decorate([
     (0, class_validator_1.MinLength)(10, { message: error_messages_1.ERROR_MESSAGES.DESCRIPTION_MIN_LENGTH }),
     __metadata("design:type", String)
 ], CreateTodoDto.prototype, "description", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateTodoDto.prototype, "userId", void 0);
 //# sourceMappingURL=create-todo.dto.js.map

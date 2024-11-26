@@ -12,7 +12,12 @@ const typeorm_1 = require("@nestjs/typeorm");
 const todo_entity_1 = require("./entities/todo.entity");
 const todo_service_1 = require("./todo.service");
 const todo_controller_1 = require("./todo.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
 let TodoModule = class TodoModule {
+    configure(consumer) {
+        consumer.apply(auth_middleware_1.AuthMiddleware)
+            .forRoutes(todo_controller_1.TodoController);
+    }
 };
 exports.TodoModule = TodoModule;
 exports.TodoModule = TodoModule = __decorate([

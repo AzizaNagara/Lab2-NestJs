@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length, MinLength, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsString, Length, MinLength, MaxLength , IsOptional} from 'class-validator';
 import { ERROR_MESSAGES } from '../../constants/error-messages';
 
 export class CreateTodoDto {
@@ -12,4 +12,7 @@ export class CreateTodoDto {
   @IsNotEmpty({ message: ERROR_MESSAGES.DESCRIPTION_REQUIRED })
   @MinLength(10, { message: ERROR_MESSAGES.DESCRIPTION_MIN_LENGTH })
   description: string;
+
+  @IsOptional()
+  userId?: number; // ajout de la propriété userId
 }

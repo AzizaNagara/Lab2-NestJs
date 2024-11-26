@@ -6,10 +6,10 @@ import { TodoEntity } from './entities/todo.entity';
 export declare class TodoController {
     private readonly todoService;
     constructor(todoService: TodoService);
-    create(createTodoDto: CreateTodoDto): Promise<TodoEntity>;
+    create(createTodoDto: CreateTodoDto, req: any): Promise<TodoEntity>;
     getTodoById(id: number): Promise<TodoEntity>;
-    update(id: string, updateTodoDto: UpdateTodoDto): Promise<TodoEntity>;
-    deleteTodo(id: number): Promise<void>;
+    update(id: string, updateTodoDto: UpdateTodoDto, req: any): Promise<TodoEntity>;
+    deleteTodo(id: number, req: any): Promise<void>;
     restoreTodo(id: number): Promise<void>;
     getTodosCountByStatus(): Promise<{
         PENDING: number;

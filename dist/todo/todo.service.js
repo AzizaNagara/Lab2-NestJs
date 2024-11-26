@@ -115,6 +115,7 @@ let TodoService = class TodoService {
             .createQueryBuilder('todo')
             .select('todo.status', 'status')
             .addSelect('COUNT(todo.id)', 'count')
+            .where('todo.deletedAt IS NULL')
             .groupBy('todo.status')
             .getRawMany();
         console.log('Query Result:', result);
