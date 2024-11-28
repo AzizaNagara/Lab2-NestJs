@@ -8,15 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CvModule = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
 const cv_service_1 = require("./cv.service");
 const cv_controller_1 = require("./cv.controller");
+const cv_entity_1 = require("./entities/cv.entity");
 let CvModule = class CvModule {
 };
 exports.CvModule = CvModule;
 exports.CvModule = CvModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([cv_entity_1.Cv]),
+        ],
         controllers: [cv_controller_1.CvController],
         providers: [cv_service_1.CvService],
+        exports: [cv_service_1.CvService],
     })
 ], CvModule);
 //# sourceMappingURL=cv.module.js.map

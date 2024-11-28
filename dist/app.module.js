@@ -20,6 +20,7 @@ const skill_module_1 = require("./skill/skill.module");
 const user_module_1 = require("./user/user.module");
 const cv_entity_1 = require("./cv/entities/cv.entity");
 const skill_entity_1 = require("./skill/entities/skill.entity");
+const seed_controller_1 = require("./seed.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -43,7 +44,7 @@ exports.AppModule = AppModule = __decorate([
             skill_module_1.SkillModule,
             user_module_1.UserModule,
         ],
-        controllers: [app_controller_1.AppController],
+        controllers: [app_controller_1.AppController, seed_controller_1.SeedController],
         providers: [app_service_1.AppService],
     })
 ], AppModule);
