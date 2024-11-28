@@ -22,8 +22,9 @@ let CvService = class CvService {
     constructor(cvRepository) {
         this.cvRepository = cvRepository;
     }
-    create(createCvDto) {
-        return 'This action adds a new CV';
+    async create(createCvDto) {
+        const newCv = this.cvRepository.create(createCvDto);
+        return await this.cvRepository.save(newCv);
     }
     findAll() {
         return this.cvRepository.find();
@@ -31,11 +32,20 @@ let CvService = class CvService {
     findOne(id) {
         return this.cvRepository.findOne({ where: { id } });
     }
-    update(id, updateCvDto) {
-        return `This action updates a #${id} CV`;
+    async update(id, updateCvDto) {
+        const cv = await this.cvRepository.findOne({ where: { id } });
+        if (!cv) {
+            throw new Error('CV not found');
+        }
+        Object.assign(cv, updateCvDto);
+        return await this.cvRepository.save(cv);
     }
-    remove(id) {
-        return `This action removes a #${id} CV`;
+    async remove(id) {
+        const cv = await this.cvRepository.findOne({ where: { id } });
+        if (!cv) {
+            throw new Error('CV not found');
+        }
+        return this.cvRepository.remove(cv);
     }
     generateFakeCv() {
         const fakeCv = new cv_entity_1.Cv();

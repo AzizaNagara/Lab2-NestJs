@@ -4,9 +4,9 @@ export declare class CreateCvDto {
     name: string;
     firstname: string;
     age: number;
-    cin: number;
+    cin: string;
     job: string;
     path: string;
-    skills: Skill[];
-    user: User;
+    skills?: Skill[];
+    user?: User;
 }

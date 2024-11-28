@@ -14,10 +14,13 @@ export class CvService {
     private cvRepository: Repository<Cv>,
   ) {}
 
-  // Create a new CV
-  create(createCvDto: CreateCvDto) {
-    return 'This action adds a new CV';
-  }
+// Create a new CV
+async create(createCvDto: CreateCvDto) {
+  // Use the Cv repository to create a new CV
+  const newCv = this.cvRepository.create(createCvDto); // Map DTO to entity
+  return await this.cvRepository.save(newCv); // Save the entity in the database
+}
+
 
   // Find all CVs
   findAll() {
@@ -29,16 +32,31 @@ export class CvService {
     return this.cvRepository.findOne({ where: { id } });
   }
 
-  // Update a CV
-  update(id: number, updateCvDto: UpdateCvDto) {
-    return `This action updates a #${id} CV`;
-  }
+    // Update a CV
+    async update(id: number, updateCvDto: UpdateCvDto): Promise<Cv> {
+      // Step 1: Find the CV by ID
+      const cv = await this.cvRepository.findOne({ where: { id } });
+  
+      if (!cv) {
+        throw new Error('CV not found'); // Handle case when CV is not found
+      }
+  
+      // Step 2: Merge the update data with the found CV
+      Object.assign(cv, updateCvDto); // This merges the fields from updateCvDto into the cv entity
+  
+      // Step 3: Save and return the updated CV
+      return await this.cvRepository.save(cv); // This saves the updated entity back to the database
+    }
+  
 
   // Remove a CV
-  remove(id: number) {
-    return `This action removes a #${id} CV`;
+  async remove(id: number) {
+    const cv = await this.cvRepository.findOne({ where: { id } });
+    if (!cv) {
+      throw new Error('CV not found');
+    }
+    return this.cvRepository.remove(cv); // Remove the CV from the database
   }
-
   // Generate a fake CV
   generateFakeCv(): Cv {
     const fakeCv = new Cv();
