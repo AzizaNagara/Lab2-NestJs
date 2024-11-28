@@ -1,4 +1,4 @@
-import { TodoEntity } from "src/todo/entities/todo.entity";
+import { TodoEntity } from '../../todo/entities/todo.entity';
 import { Cv } from '../../cv/entities/cv.entity';
 export declare class User {
     id: number;

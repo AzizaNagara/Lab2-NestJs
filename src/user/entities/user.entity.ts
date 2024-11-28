@@ -1,5 +1,5 @@
 import {Entity,Column,PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { TodoEntity } from "src/todo/entities/todo.entity";
+import { TodoEntity } from '../../todo/entities/todo.entity';
 import { Cv } from '../../cv/entities/cv.entity';
 
 

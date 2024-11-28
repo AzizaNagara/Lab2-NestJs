@@ -15,8 +15,7 @@ const todo_controller_1 = require("./todo.controller");
 const auth_middleware_1 = require("../middleware/auth.middleware");
 let TodoModule = class TodoModule {
     configure(consumer) {
-        consumer.apply(auth_middleware_1.AuthMiddleware)
-            .forRoutes(todo_controller_1.TodoController);
+        consumer.apply(auth_middleware_1.AuthMiddleware).forRoutes(todo_controller_1.TodoController);
     }
 };
 exports.TodoModule = TodoModule;
@@ -24,7 +23,8 @@ exports.TodoModule = TodoModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([todo_entity_1.TodoEntity])],
         providers: [todo_service_1.TodoService],
-        controllers: [todo_controller_1.TodoController]
+        controllers: [todo_controller_1.TodoController],
+        exports: [todo_service_1.TodoService],
     })
 ], TodoModule);
 //# sourceMappingURL=todo.module.js.map

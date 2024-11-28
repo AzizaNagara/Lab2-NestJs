@@ -8,19 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
 const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
 const common_module_module_1 = require("./common-module/common-module.module");
 const todo_module_1 = require("./todo/todo.module");
-const typeorm_1 = require("@nestjs/typeorm");
 const todo_entity_1 = require("./todo/entities/todo.entity");
-const user_entity_1 = require("./user/entities/user.entity");
 const cv_module_1 = require("./cv/cv.module");
 const skill_module_1 = require("./skill/skill.module");
 const user_module_1 = require("./user/user.module");
 const cv_entity_1 = require("./cv/entities/cv.entity");
 const skill_entity_1 = require("./skill/entities/skill.entity");
 const seed_controller_1 = require("./seed.controller");
+const user_entity_1 = require("./user/entities/user.entity");
+const app_service_1 = require("./app.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -34,15 +34,15 @@ exports.AppModule = AppModule = __decorate([
                 username: 'postgres',
                 password: 'aziza',
                 database: 'todos',
-                entities: [todo_entity_1.TodoEntity, user_entity_1.User, skill_entity_1.Skill, cv_entity_1.Cv],
+                entities: [user_entity_1.User, skill_entity_1.Skill, cv_entity_1.Cv, todo_entity_1.TodoEntity],
                 synchronize: true,
                 logging: true,
             }),
             common_module_module_1.CommonModuleModule,
-            todo_module_1.TodoModule,
+            user_module_1.UserModule,
             cv_module_1.CvModule,
             skill_module_1.SkillModule,
-            user_module_1.UserModule,
+            todo_module_1.TodoModule,
         ],
         controllers: [app_controller_1.AppController, seed_controller_1.SeedController],
         providers: [app_service_1.AppService],

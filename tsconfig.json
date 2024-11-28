@@ -1,14 +1,21 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+      "node", "jest", "body-parser", "connect", "express", "jsonwebtoken",  "qs", "supertest"
+    ],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "target": "ES2021",
-    "strict":true,
-    "rootDir":"./src",
+    "strict": true,
+    "rootDir": "./src",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -18,7 +25,8 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "moduleResolution": "node"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
