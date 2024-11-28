@@ -47,6 +47,9 @@ let TodoController = class TodoController {
             throw new common_1.UnauthorizedException('Vous n’avez pas la permission de supprimer ce Todo.');
         }
         await this.todoService.softDelete(id);
+        return {
+            message: 'Todo deleted successfully',
+        };
     }
     async restoreTodo(id) {
         await this.todoService.restoreTodo(id);

@@ -4,4 +4,7 @@ export declare class AppController {
     constructor(appService: AppService);
     getHello(): string;
     getUuid(): string;
+    generateToken(): {
+        token: string;
+    };
 }

@@ -15,6 +15,11 @@ const todo_module_1 = require("./todo/todo.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const todo_entity_1 = require("./todo/entities/todo.entity");
 const user_entity_1 = require("./user/entities/user.entity");
+const cv_module_1 = require("./cv/cv.module");
+const skill_module_1 = require("./skill/skill.module");
+const user_module_1 = require("./user/user.module");
+const cv_entity_1 = require("./cv/entities/cv.entity");
+const skill_entity_1 = require("./skill/entities/skill.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -26,14 +31,17 @@ exports.AppModule = AppModule = __decorate([
                 host: 'localhost',
                 port: 5432,
                 username: 'postgres',
-                password: 'charfouna',
+                password: 'aziza',
                 database: 'todos',
-                entities: [todo_entity_1.TodoEntity, user_entity_1.User],
+                entities: [todo_entity_1.TodoEntity, user_entity_1.User, skill_entity_1.Skill, cv_entity_1.Cv],
                 synchronize: true,
                 logging: true,
             }),
             common_module_module_1.CommonModuleModule,
             todo_module_1.TodoModule,
+            cv_module_1.CvModule,
+            skill_module_1.SkillModule,
+            user_module_1.UserModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

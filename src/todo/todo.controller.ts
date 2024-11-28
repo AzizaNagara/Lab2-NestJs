@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,UnauthorizedException ,Request, Query} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,UnauthorizedException ,Request, Query, ValidationPipe,UsePipes} from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -8,7 +8,7 @@ import { TodoEntity } from './entities/todo.entity';
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
-
+  
   @Post()
   async create(@Body() createTodoDto: CreateTodoDto, @Request() req) {
     // Associer l'utilisateur à la création du Todo
@@ -45,7 +45,7 @@ export class TodoController {
 
   // endpoint softDelete
   @Delete(':id')
-  async deleteTodo(@Param('id') id: number, @Request() req): Promise<void> {
+  async deleteTodo(@Param('id') id: number, @Request() req): Promise<{ message: string }> {
     const todo = await this.todoService.findOneById(id);
 
     // Vérifier si l'utilisateur est bien celui qui a créé le Todo
@@ -53,6 +53,9 @@ export class TodoController {
       throw new UnauthorizedException('Vous n’avez pas la permission de supprimer ce Todo.');
     }
     await this.todoService.softDelete(id);
+    return {
+      message: 'Todo deleted successfully',
+    };
   }
   
   // endpoint to restore

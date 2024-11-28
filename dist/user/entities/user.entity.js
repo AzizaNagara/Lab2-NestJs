@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const todo_entity_1 = require("../../todo/entities/todo.entity");
+const cv_entity_1 = require("../../cv/entities/cv.entity");
 let User = class User {
 };
 exports.User = User;
@@ -35,6 +36,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => todo_entity_1.TodoEntity, todo => todo.user),
     __metadata("design:type", Array)
 ], User.prototype, "todos", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => cv_entity_1.Cv, (cv) => cv.user),
+    __metadata("design:type", Array)
+], User.prototype, "cvs", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)('users')
 ], User);

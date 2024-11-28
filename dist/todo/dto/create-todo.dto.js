@@ -16,13 +16,6 @@ class CreateTodoDto {
 }
 exports.CreateTodoDto = CreateTodoDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: error_messages_1.ERROR_MESSAGES.NAME_REQUIRED }),
-    (0, class_validator_1.IsString)({ message: error_messages_1.ERROR_MESSAGES.NAME_REQUIRED }),
-    (0, class_validator_1.MinLength)(3, { message: error_messages_1.ERROR_MESSAGES.NAME_MIN_LENGTH }),
-    (0, class_validator_1.MaxLength)(10, { message: error_messages_1.ERROR_MESSAGES.NAME_MAX_LENGTH }),
-    __metadata("design:type", String)
-], CreateTodoDto.prototype, "name", void 0);
-__decorate([
     (0, class_validator_1.IsNotEmpty)({ message: error_messages_1.ERROR_MESSAGES.DESCRIPTION_REQUIRED }),
     (0, class_validator_1.MinLength)(10, { message: error_messages_1.ERROR_MESSAGES.DESCRIPTION_MIN_LENGTH }),
     __metadata("design:type", String)

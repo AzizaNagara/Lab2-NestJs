@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
+const jwt = require("jsonwebtoken");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
@@ -21,6 +22,10 @@ let AppController = class AppController {
     }
     getUuid() {
         return this.appService.generateNewUuid();
+    }
+    generateToken() {
+        const token = jwt.sign({ userId: 123 }, 'secretKey', { expiresIn: '1h' });
+        return { token };
     }
 };
 exports.AppController = AppController;
@@ -36,8 +41,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", String)
 ], AppController.prototype, "getUuid", null);
+__decorate([
+    (0, common_1.Get)('generate-token'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "generateToken", null);
 exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(),
+    (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [app_service_1.AppService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map
